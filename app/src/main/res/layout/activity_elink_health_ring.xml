@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_health_ring"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btn_health_ring_connect, btn_health_ring_disconnect, btn_health_ring_clear_log, btn_health_ring_device_state, btn_health_ring_sync_unix_time, btn_health_ring_sensor_version, btn_health_ring_checkup_duration, btn_health_ring_set_checkup_duration, btn_health_ring_checkup_type, btn_health_ring_set_checkup_type, btn_health_ring_auto_checkup, btn_health_ring_open_auto_checkup, btn_health_ring_close_auto_checkup, btn_health_ring_get_history, btn_health_ring_get_next_history, btn_health_ring_get_history_over, btn_health_ring_delete_history, btn_health_ring_start_checkup, btn_health_ring_stop_checkup, btn_health_ring_sensor_ota, btn_health_ring_ble_ota"
+        app:flow_wrapMode="chain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_health_ring_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connect_device" />
+
+    <Button
+        android:id="@+id/btn_health_ring_disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disconnect_device" />
+
+    <Button
+        android:id="@+id/btn_health_ring_device_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/query_device_status" />
+
+    <Button
+        android:id="@+id/btn_health_ring_checkup_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/query_checkup_duration" />
+
+    <Button
+        android:id="@+id/btn_health_ring_sensor_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sensor_version" />
+
+    <Button
+        android:id="@+id/btn_health_ring_checkup_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/checkup_type" />
+
+    <Button
+        android:id="@+id/btn_health_ring_auto_checkup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auto_checkup_state" />
+
+    <Button
+        android:id="@+id/btn_health_ring_open_auto_checkup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_auto_checkup" />
+
+    <Button
+        android:id="@+id/btn_health_ring_close_auto_checkup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close_auto_checkup" />
+
+    <Button
+        android:id="@+id/btn_health_ring_set_checkup_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_checkup_duration" />
+
+    <Button
+        android:id="@+id/btn_health_ring_set_checkup_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_checkup_type" />
+
+    <Button
+        android:id="@+id/btn_health_ring_get_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_history" />
+
+    <Button
+        android:id="@+id/btn_health_ring_get_next_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_next" />
+
+    <Button
+        android:id="@+id/btn_health_ring_get_history_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/get_over" />
+
+    <Button
+        android:id="@+id/btn_health_ring_delete_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_history" />
+
+    <Button
+        android:id="@+id/btn_health_ring_start_checkup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_checkup" />
+
+    <Button
+        android:id="@+id/btn_health_ring_stop_checkup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stop_checkup" />
+
+    <Button
+        android:id="@+id/btn_health_ring_sync_unix_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sync_time" />
+
+    <Button
+        android:id="@+id/btn_health_ring_sensor_ota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sensor_ota" />
+
+    <Button
+        android:id="@+id/btn_health_ring_ble_ota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ble_ota" />
+
+    <Button
+        android:id="@+id/btn_health_ring_clear_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_log" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_ble_log"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flow_health_ring" />
+</androidx.constraintlayout.widget.ConstraintLayout>
