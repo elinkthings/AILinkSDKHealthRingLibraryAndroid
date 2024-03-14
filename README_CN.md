@@ -1,6 +1,7 @@
 [TOC]
-# AILink Health Ring SDK Usage Guide - Android
+# AILink健康戒指SDK使用说明 - Android
 
+##[English](README.md)
 
 Latest version of AILinkSDKRepositoryAndroid: [![](https://jitpack.io/v/elinkthings/AILinkSDKRepositoryAndroid.svg)](https://jitpack.io/#elinkthings/AILinkSDKRepositoryAndroid) [AILinkSDKRepositoryAndroid aar](https://github.com/elinkthings/AILinkSDKRepositoryAndroid/releases)
 
