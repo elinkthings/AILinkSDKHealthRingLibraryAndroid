@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">易连物联网健康戒指SDK Demo</string>
+    <string name="start_scan">开始扫描</string>
+    <string name="stop_scan">停止扫描</string>
+    <string name="device_name">设备名称</string>
+    <string name="connect_device">连接设备</string>
+    <string name="disconnect_device">断开连接</string>
+    <string name="query_device_status">查询设备状态</string>
+    <string name="query_checkup_duration">查询监测周期</string>
+    <string name="sensor_version">传感器版本</string>
+    <string name="checkup_type">监测模式</string>
+    <string name="auto_checkup_state">自动监测状态</string>
+    <string name="open_auto_checkup">开启自动监测</string>
+    <string name="close_auto_checkup">关闭自动监测</string>
+    <string name="set_checkup_duration">设置监测周期</string>
+    <string name="set_checkup_type">设置监测模式</string>
+    <string name="get_history">获取历史</string>
+    <string name="get_next">获取下一条</string>
+    <string name="get_over">获取完毕</string>
+    <string name="delete_history">删除数据</string>
+    <string name="start_checkup">开始体检</string>
+    <string name="stop_checkup">结束体检</string>
+    <string name="sync_time">同步时间</string>
+    <string name="sensor_ota">芯片OTA</string>
+    <string name="ble_ota">蓝牙OTA</string>
+    <string name="clear_log">清空log</string>
+    <string name="checkup_realtime_data">实时数据</string>
+    <string name="checkup_history_data">历史数据</string>
+    <string name="device_status">设备状态</string>
+    <string name="checkup_packets">体检包</string>
+    <string name="checkup_duration">监测周期</string>
+    <string name="history_generated">有历史数据生成</string>
+    <string name="time_minutes">分钟</string>
+    <string name="select_sensor_ota_file">选择芯片OTA文件</string>
+    <string name="select_ble_ota_file">选择蓝牙OTA文件</string>
+    <string name="checkup_type_complex">全面监测</string>
+    <string name="checkup_type_fast">快速监测</string>
+    <string name="ble_firmware_version">蓝牙固件版本</string>
+    <string name="ble_open">蓝牙已开启</string>
+    <string name="ble_close">蓝牙已关闭</string>
+    <string name="connecting">连接中</string>
+    <string name="connect_success">连接成功</string>
+    <string name="disconnect">连接断开</string>
+    <string name="services_discovered">发现服务</string>
+</resources>
