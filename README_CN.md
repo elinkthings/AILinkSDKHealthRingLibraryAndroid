@@ -1,4 +1,3 @@
-[TOC]
 # AILink健康戒指SDK使用说明 - Android
 
 ##[English](README.md)

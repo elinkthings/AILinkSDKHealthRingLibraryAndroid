@@ -1,4 +1,3 @@
-[TOC]
 # AILink Health Ring SDK Usage Guide - Android
 
 ##[中文](README_CN.md)
