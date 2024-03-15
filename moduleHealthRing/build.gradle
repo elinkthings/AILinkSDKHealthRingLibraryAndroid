@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.elinkthings.healthring'
+    namespace 'com.elinkthings.healthring.sdk'
     compileSdk 33
 
     defaultConfig {
