@@ -693,8 +693,9 @@ enum class ElinkSleepState {
 - AILinkSDKHealthRingLibraryAndroid library
 
 | Version number | Update time | Author | Update information |
-|:-------|:------------|:------|-----|
-| 1.0.0 | 2024/03/14 | suzy | Initial version
+|:---------------|:------------|:------|-----|
+| 1.0.0          | 2024/03/14  | suzy | Initial version
+| 1.1.0          | 2025/03/21  | suzy | Added sleep and step count command processing
 ---
 
 ## FAQ
