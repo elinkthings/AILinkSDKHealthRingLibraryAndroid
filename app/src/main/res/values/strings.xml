@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ElinkHealthRingSDK Demo</string>
+    <string name="app_name">ElinkHealthRingSDK</string>
     <string name="start_scan">Start Scan</string>
     <string name="stop_scan">Stop Scan</string>
     <string name="device_name">Device Name</string>
@@ -42,4 +42,24 @@
     <string name="connect_success">Connected</string>
     <string name="disconnect">Disconnected</string>
     <string name="services_discovered">Services discovered</string>
+    <string name="sync_ble_time">Synchronize Bluetooth system time</string>
+    <string name="query_sleep_step_duration">Query sleep/step detection period</string>
+    <string name="set_sleep_step_duration">Set the sleep/step detection period</string>
+    <string name="sleep_step_duration">Sleep/step detection period</string>
+    <string name="query_sleep_check_state">Query sleep check status</string>
+    <string name="sleep_check_state">Sleep check state</string>
+    <string name="open_sleep_check">Open sleep detection</string>
+    <string name="close_sleep_check">Close sleep check</string>
+    <string name="query_step_check_state">Query step detection status</string>
+    <string name="open_step_check">Open step detection</string>
+    <string name="close_step_check">Close step detection</string>
+    <string name="step_check_state">Step detection status</string>
+    <string name="sleep_step_history_data">Sleep/step history data</string>
+    <string name="sleep_step_history_generated">Sleep/step history data generated</string>
+    <string name="get_sleep_step_history">Get sleep/step history data</string>
+    <string name="get_next_sleep_step_history">Get the next page of sleep/step history data</string>
+    <string name="get_over_sleep_step_history">Getting sleep/step history data ends</string>
+    <string name="delete_sleep_step_history">Delete sleep/step history data</string>
+    <string name="check_state_open">Open</string>
+    <string name="check_state_close">Close</string>
 </resources>

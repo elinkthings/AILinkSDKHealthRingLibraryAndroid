@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">易连物联网健康戒指SDK Demo</string>
+    <string name="app_name">易连物联网健康戒指SDK</string>
     <string name="start_scan">开始扫描</string>
     <string name="stop_scan">停止扫描</string>
     <string name="device_name">设备名称</string>
@@ -43,4 +43,24 @@
     <string name="connect_success">连接成功</string>
     <string name="disconnect">连接断开</string>
     <string name="services_discovered">发现服务</string>
+    <string name="sync_ble_time">同步蓝牙系统时间</string>
+    <string name="query_sleep_step_duration">查询睡眠/步数检测周期</string>
+    <string name="set_sleep_step_duration">设置睡眠/步数检测周期</string>
+    <string name="sleep_step_duration">睡眠/步数检测周期</string>
+    <string name="query_sleep_check_state">查询睡眠检测状态</string>
+    <string name="sleep_check_state">睡眠检测状态</string>
+    <string name="open_sleep_check">打开睡眠检测</string>
+    <string name="close_sleep_check">关闭睡眠检测</string>
+    <string name="query_step_check_state">查询步数检测状态</string>
+    <string name="open_step_check">打开步数检测</string>
+    <string name="close_step_check">关闭步数检测</string>
+    <string name="step_check_state">步数检测状态</string>
+    <string name="sleep_step_history_data">睡眠/步数历史数据</string>
+    <string name="sleep_step_history_generated">有睡眠/步数历史数据生成</string>
+    <string name="get_sleep_step_history">获取睡眠/步数历史数据</string>
+    <string name="get_next_sleep_step_history">获取下一页睡眠/步数历史数据</string>
+    <string name="get_over_sleep_step_history">获取睡眠/步数历史数据结束</string>
+    <string name="delete_sleep_step_history">删除睡眠/步数历史数据</string>
+    <string name="check_state_open">开</string>
+    <string name="check_state_close">关</string>
 </resources>

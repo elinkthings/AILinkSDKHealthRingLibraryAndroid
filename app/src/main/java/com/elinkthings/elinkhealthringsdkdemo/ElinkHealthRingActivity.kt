@@ -15,10 +15,12 @@ import com.elinkthings.healthring.ElinkHealthRingBleData
 import com.elinkthings.healthring.bean.ElinkCheckupRealtimeData
 import com.elinkthings.healthring.bean.ElinkRingDeviceStatus
 import com.elinkthings.healthring.bean.ElinkRingHistoryData
+import com.elinkthings.healthring.bean.ElinkSleepAndStepData
 import com.elinkthings.healthring.config.ElinkCheckupType
 import com.elinkthings.healthring.config.ElinkSensorOTAErrorType
 import com.elinkthings.healthring.impl.ImplHealthRingResult
 import com.elinkthings.healthring.impl.ImplSensorOTA
+import com.elinkthings.healthring.impl.ImplSleepAndStepResult
 import com.elinkthings.healthring.utils.toHexString
 import com.pingwang.bluetoothlib.bean.BleValueBean
 import com.pingwang.bluetoothlib.device.BleDevice
@@ -39,7 +41,7 @@ import java.util.*
  * @date 2024/3/13 16:54
  **/
 class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, OnBleVersionListener,
-    ImplHealthRingResult {
+    ImplHealthRingResult, ImplSleepAndStepResult {
 
     private val logList = mutableListOf<String>()
     private val logAdapter = BleLogAdapter(logList)
@@ -86,6 +88,8 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
             return aiLinkBleManager?.getBleDevice(mac)
         }
 
+    private var syncTime: Long? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -117,16 +121,15 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
         initButton(R.id.btn_health_ring_close_auto_checkup) {
             ringBleData?.closeAutoCheck()
         }
-        initButton(R.id.btn_health_ring_close_auto_checkup) {
-            ringBleData?.closeAutoCheck()
-        }
         initButton(R.id.btn_health_ring_set_checkup_duration) {
-            showListDialog(getString(R.string.set_checkup_duration), arrayOf("15", "30", "45", "60")) { item, _ ->
+            showListDialog(getString(R.string.set_checkup_duration), arrayOf("5", "15", "30", "45", "60")) { item, _ ->
                 ringBleData?.setCheckupDuration(item.toInt())
             }
         }
         initButton(R.id.btn_health_ring_set_checkup_type) {
-            showListDialog(getString(R.string.set_checkup_type), arrayOf(getString(R.string.checkup_type_complex), getString(R.string.checkup_type_fast))) { _, position ->
+            showListDialog(getString(R.string.set_checkup_type), arrayOf(getString(R.string.checkup_type_complex), getString(
+                R.string.checkup_type_fast
+            ))) { _, position ->
                 ringBleData?.setCheckupType(if (position == 0) ElinkCheckupType.COMPLEX else ElinkCheckupType.FAST)
             }
         }
@@ -191,7 +194,54 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
             ringBleData?.stopCheckup()
         }
         initButton(R.id.btn_health_ring_sync_unix_time) {
-            ringBleData?.syncUnixTime()
+            if (syncTime == null) {
+                syncTime = System.currentTimeMillis()
+            }
+            ringBleData?.syncUnixTime(syncTime!!)
+        }
+        initButton(R.id.btn_health_ring_sync_ble_time) {
+            if (syncTime == null) {
+                syncTime = System.currentTimeMillis()
+            }
+            ringBleData?.syncBleTime(syncTime!!)
+        }
+        initButton(R.id.btn_health_ring_query_sleep_and_step_check_duration) {
+            ringBleData?.querySleepAndStepDuration()
+        }
+        initButton(R.id.btn_health_ring_set_sleep_and_step_check_duration) {
+            showListDialog(getString(R.string.set_checkup_duration), arrayOf("5", "15", "30", "45", "60")) { item, _ ->
+                ringBleData?.setSleepAndStepDuration(item.toInt())
+            }
+        }
+        initButton(R.id.btn_health_ring_query_sleep_check_state) {
+            ringBleData?.querySleepCheck()
+        }
+        initButton(R.id.btn_health_ring_open_sleep_check) {
+            ringBleData?.openSleepCheck()
+        }
+        initButton(R.id.btn_health_ring_close_sleep_check) {
+            ringBleData?.closeSleepCheck()
+        }
+        initButton(R.id.btn_health_ring_query_step_check_state) {
+            ringBleData?.queryStepCheck()
+        }
+        initButton(R.id.btn_health_ring_open_step_check) {
+            ringBleData?.openStepCheck()
+        }
+        initButton(R.id.btn_health_ring_close_step_check) {
+            ringBleData?.closeStepCheck()
+        }
+        initButton(R.id.btn_health_ring_get_sleep_and_step_history) {
+            ringBleData?.getSleepAndStepHistory()
+        }
+        initButton(R.id.btn_health_ring_get_next_sleep_and_step_history) {
+            ringBleData?.getNextSleepAndStepHistory()
+        }
+        initButton(R.id.btn_health_ring_get_over_sleep_and_step_history) {
+            ringBleData?.getSleepAndStepHistoryOver()
+        }
+        initButton(R.id.btn_health_ring_delete_sleep_and_step_history) {
+            ringBleData?.deleteSleepAndStepHistory()
         }
         initButton(R.id.btn_health_ring_clear_log) {
             logList.clear()
@@ -266,6 +316,7 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
             it.setOnBleVersionListener(this)
             ringBleData = ElinkHealthRingBleData(it)
             ringBleData?.setImplHealthRingResult(this)
+            ringBleData?.setImplSleepAndStepResult(this)
             ringBleData?.setImplSensorOTA(object : ImplSensorOTA {
                 override fun onFailure(type: ElinkSensorOTAErrorType) {
                     addLog("${getString(R.string.sensor_ota)} onFailure: $type")
@@ -286,14 +337,15 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
     private fun addLog(log: String) {
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault())
-        logList.add("${dateFormat.format(Date(time))}: $log")
-        logAdapter.notifyItemInserted(logList.size - 1)
-        rvBleLog?.smoothScrollToPosition(logAdapter.itemCount - 1)
+        logList.add(0, "${dateFormat.format(Date(time))}: $log")
+        logAdapter.notifyItemInserted(0)
+        rvBleLog?.smoothScrollToPosition(0)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         ringBleData?.setImplHealthRingResult(null)
+        ringBleData?.setImplSleepAndStepResult(null)
         ringBleData?.setImplSensorOTA(null)
         aiLinkBleManager?.setOnCallbackBle(null)
         bleDevice?.setOnBleVersionListener(null)
@@ -333,19 +385,39 @@ class ElinkHealthRingActivity : ElinkBasePermissionActivity(), OnCallbackBle, On
     }
 
     override fun onGetAutoCheckupStatus(open: Boolean) {
-        addLog("${getString(R.string.auto_checkup_state)}: $open")
+        addLog("${getString(R.string.auto_checkup_state)}: ${if (open) getString(R.string.check_state_open) else getString(R.string.check_state_close)}")
     }
 
     override fun onGetCheckupType(type: ElinkCheckupType) {
         addLog("${getString(R.string.checkup_type)}: $type")
     }
 
-    override fun onNotifyHistoryGenerated() {
+    override fun onNotifySleepAndStepHistoryGenerated() {
         addLog(getString(R.string.history_generated))
     }
 
     override fun onSetUnixTimeResult(success: Boolean) {
         addLog("${getString(R.string.sync_time)}: $success")
+    }
+
+    override fun onSyncBleTimeResult(success: Boolean) {
+        addLog("${getString(R.string.sync_ble_time)}: $success")
+    }
+
+    override fun onGetCheckDuration(duration: Int) {
+        addLog("${getString(R.string.sleep_step_duration)}: ${duration}${getString(R.string.time_minutes)}")
+    }
+    override fun onGetSleepAndStepHistory(histories: List<ElinkSleepAndStepData>, total: Int, sentCount: Int) {
+        addLog("${getString(R.string.sleep_step_history_data)}: $histories, $total, $sentCount, ${sentCount < total}")
+    }
+    override fun onNotifyHistoryGenerated() {
+        addLog(getString(R.string.sleep_step_history_generated))
+    }
+    override fun onGetSleepCheckState(open: Boolean) {
+        addLog("${getString(R.string.sleep_check_state)}: ${if (open) getString(R.string.check_state_open) else getString(R.string.check_state_close)}")
+    }
+    override fun onGetStepCheckState(open: Boolean) {
+        addLog("${getString(R.string.step_check_state)}: ${if (open) getString(R.string.check_state_open) else getString(R.string.check_state_close)}")
     }
 
     private fun showListDialog(
