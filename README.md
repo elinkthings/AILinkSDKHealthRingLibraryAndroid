@@ -341,8 +341,47 @@ ringBleData.startCheckup()
 //End health checkup
 ringBleData.stopCheckup()
 
-//Synchronize Unix time
-ringBleData.syncUnixTime()
+//Synchronize Unix time. Note that the timestamp here must be consistent with the timestamp of syncBleTime
+ringBleData.syncUnixTime(timestamp: Long)
+
+//Synchronize BLE system time. Note that the timestamp here must be consistent with the timestamp of syncUnixTime
+fun syncBleTime(timestamp: Long)
+
+//Set the sleep/step monitoring cycle
+fun setSleepAndStepDuration(duration: Int = 5) //Unit: minutes
+
+//Query the sleep/step monitoring cycle
+fun querySleepAndStepDuration()
+
+//Query the sleep monitoring status
+fun querySleepCheck()
+
+//Open sleep monitoring
+fun openSleepCheck()
+
+//Close sleep monitoring
+fun closeSleepCheck()
+
+//Query the step monitoring status
+fun queryStepCheck()
+
+//Open step monitoring
+fun openStepCheck()
+
+//Close step monitoring
+fun closeStepCheck()
+
+//Get sleep/step history data
+ringBleData.getSleepAndStepHistory()
+
+//Get the next page of sleep/step history data
+ringBleData.getNextSleepAndStepHistory()
+
+//Get the end of sleep/step history data
+ringBleData.getSleepAndStepHistoryOver()
+
+//Delete sleep/step history data
+ringBleData.deleteSleepAndStepHistory()
 
 //Sensor OTA
 ringBleData.startSensorOTA(fileData: ByteArray)
@@ -368,6 +407,8 @@ ringBleData.startBleOTA(filePath: String, object : OnBleOTAListener {
 BleDevice.disconnect();
 
 ```
+
+- <font color="#FF0000">The timestamp parameter of ringBleData.syncUnixTime(timestamp: Long) and ringBleData.syncBleTime(timestamp: Long) must use the same value</font>
 
 ### Device Command Reply Callback Explanation
 ```kotlin
@@ -463,13 +504,69 @@ ringBleData?.setImplHealthRingResult(object : ImplHealthRingResult {
     * @param success
     */
    override fun onSetUnixTimeResult(success: Boolean) {}
+    
+   /**
+    * Synchronous BleTime callback
+    *
+    * @param success
+    */
+   override fun onSyncBleTimeResult(success: Boolean) {}
+    
+})
+```
+
+### Device sleep/step command reply callback description
+```kotlin
+ringBleData?.setImplSleepAndStepResult(object : ImplSleepAndStepResult {
+
+   /**
+    * (Query and set) sleep/step monitoring cycle callback
+    *
+    * @param duration unit (minutes)
+    */
+   override fun onGetCheckDuration(duration: Int) {}
+    
+   /**
+    * Get sleep/step history data callback, and compare total and sentCount to determine whether there is more history data
+    * If there is, call getNextHistory()
+    * If not, call getHistoryOver()
+    * After finishing getting history data, call deleteHistory() to delete history data
+    *
+    * @param histories history data list
+    * @param total total
+    * @param sentCount received number
+    */
+   override fun onGetSleepAndStepHistory(
+      histories: List<ElinkSleepAndStepData>,
+      total: Int,
+      sentCount: Int
+   ) {}
+
+   /**
+    * The device generates a callback for notification of sleep/step history data
+    */
+   override fun onNotifySleepAndStepHistoryGenerated() {}
+
+   /**
+    * (Query, open and close) sleep monitoring status callback
+    *
+    * @param open
+    */
+   override fun onGetSleepCheckState(open: Boolean) {}
+   
+   /**
+    * (Query, open and close) step monitoring status callback
+    *
+    * @param open
+    */
+   override fun onGetStepCheckState(open: Boolean) {}
 
 })
 ```
 
-### 相关类说明
+### Related Class Descriptions
 
-#### Related Class Descriptions
+#### ElinkCheckupRealtimeData
 ```kotlin
 data class ElinkCheckupRealtimeData(
     val heartRate: Int, //Heart rate
@@ -542,6 +639,16 @@ enum class ElinkWearingStatus {
    UNSUPPORTED, //not supported
    NOT_WEARING, //not wearing
    WEARING, //Wearing
+}
+```
+
+### ElinkSleepState
+```kotlin
+enum class ElinkSleepState {
+    AWAKE,  //Wide Awake
+    REM,    //Rapid Eye Movement
+    LIGHT,  //Light sleep
+    DEEP,   //Deep sleep
 }
 ```
 

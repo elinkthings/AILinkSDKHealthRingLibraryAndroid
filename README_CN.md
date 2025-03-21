@@ -353,8 +353,47 @@ ringBleData.startCheckup()
 //结束体检
 ringBleData.stopCheckup()
 
-//同步Unix时间
-ringBleData.syncUnixTime()
+//同步Unix时间，注意此处的timestamp必须和syncBleTime的timestamp保持一致
+ringBleData.syncUnixTime(timestamp: Long)
+
+//同步BLE系统时间，注意此处的timestamp必须和syncUnixTime的timestamp保持一致
+fun syncBleTime(timestamp: Long)
+
+//设置睡眠/步数监测周期
+fun setSleepAndStepDuration(duration: Int = 5) //单位: 分钟
+
+//查询睡眠/步数监测周期
+fun querySleepAndStepDuration()
+
+//查询睡眠监测状态
+fun querySleepCheck()
+
+//打开睡眠监测
+fun openSleepCheck()
+
+//关闭睡眠监测
+fun closeSleepCheck()
+
+//查询步数监测状态
+fun queryStepCheck()
+
+//打开步数监测
+fun openStepCheck()
+
+//关闭步数监测
+fun closeStepCheck()
+
+//获取睡眠/步数历史数据
+ringBleData.getSleepAndStepHistory()
+
+//获取睡眠/步数下一页历史数据
+ringBleData.getNextSleepAndStepHistory()
+
+//获取睡眠/步数历史数据结束
+ringBleData.getSleepAndStepHistoryOver()
+
+//删除睡眠/步数历史数据
+ringBleData.deleteSleepAndStepHistory()
 
 //传感器OTA
 ringBleData.startSensorOTA(fileData: ByteArray)
@@ -380,6 +419,7 @@ ringBleData.startBleOTA(filePath: String, object : OnBleOTAListener {
 BleDevice.disconnect();
 
 ```
+-  <font color="#FF0000">ringBleData.syncUnixTime(timestamp: Long)和ringBleData.syncBleTime(timestamp: Long)的入参timestamp须使用同一个值</font>
 
 ### 设备指令回复回调说明
 ```kotlin
@@ -476,6 +516,62 @@ ringBleData?.setImplHealthRingResult(object : ImplHealthRingResult {
     */
    override fun onSetUnixTimeResult(success: Boolean) {}
 
+   /**
+    * 同步BleTime回调
+    *
+    * @param success
+    */
+   override fun onSyncBleTimeResult(success: Boolean) {}
+
+})
+```
+
+### 设备睡眠/步数指令回复回调说明
+```kotlin
+ringBleData?.setImplSleepAndStepResult(object : ImplSleepAndStepResult {
+
+   /**
+    * (查询和设置)睡眠/步数监测周期回调
+    *
+    * @param duration 单位(分钟)
+    */
+   override fun onGetCheckDuration(duration: Int) {}
+
+   /**
+    * 获取睡眠/步数历史数据回调，根据total和sentCount对比判断是否有更多历史数据
+    * 如果有就调用getNextHistory()
+    * 如果没有就调用getHistoryOver()
+    * 结束获取历史数据后调用deleteHistory()删除历史数据
+    *
+    * @param histories 历史数据列表
+    * @param total 总数
+    * @param sentCount 已获取数
+    */
+   override fun onGetSleepAndStepHistory(
+      histories: List<ElinkSleepAndStepData>,
+      total: Int,
+      sentCount: Int
+   ) {}
+
+   /**
+    * 设备产生睡眠/步数历史数据通知回调
+    */
+   override fun onNotifySleepAndStepHistoryGenerated() {}
+
+   /**
+    * (查询、开启和关闭)睡眠监测状态回调
+    *
+    * @param open
+    */
+   override fun onGetSleepCheckState(open: Boolean) {}
+   
+   /**
+    * (查询、开启和关闭)步数监测状态回调
+    *
+    * @param open
+    */
+   override fun onGetStepCheckState(open: Boolean) {}
+
 })
 ```
 
@@ -550,10 +646,20 @@ enum class ElinkSensorOTAErrorType {
 
 #### ElinkWearingStatus
 ```kotlin
-enum class ElinkWearingStatus() {
+enum class ElinkWearingStatus {
     UNSUPPORTED, //不支持
     NOT_WEARING,  //未佩戴
     WEARING,  //佩戴中
+}
+```
+
+### ElinkSleepState
+```kotlin
+enum class ElinkSleepState {
+    AWAKE,  //清醒
+    REM,    //快速眼动
+    LIGHT,  //浅睡
+    DEEP,   //深睡
 }
 ```
 
