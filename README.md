@@ -345,31 +345,31 @@ ringBleData.stopCheckup()
 ringBleData.syncUnixTime(timestamp: Long)
 
 //Synchronize BLE system time. Note that the timestamp here must be consistent with the timestamp of syncUnixTime
-fun syncBleTime(timestamp: Long)
+ringBleData.syncBleTime(timestamp: Long)
 
 //Set the sleep/step monitoring cycle
-fun setSleepAndStepDuration(duration: Int = 5) //Unit: minutes
+ringBleData.setSleepAndStepDuration(duration: Int = 5) //Unit: minutes
 
 //Query the sleep/step monitoring cycle
-fun querySleepAndStepDuration()
+ringBleData.querySleepAndStepDuration()
 
 //Query the sleep monitoring status
-fun querySleepCheck()
+ringBleData.querySleepCheck()
 
 //Open sleep monitoring
-fun openSleepCheck()
+ringBleData.openSleepCheck()
 
 //Close sleep monitoring
-fun closeSleepCheck()
+ringBleData.closeSleepCheck()
 
 //Query the step monitoring status
-fun queryStepCheck()
+ringBleData.queryStepCheck()
 
 //Open step monitoring
-fun openStepCheck()
+ringBleData.openStepCheck()
 
 //Close step monitoring
-fun closeStepCheck()
+ringBleData.closeStepCheck()
 
 //Get sleep/step history data
 ringBleData.getSleepAndStepHistory()

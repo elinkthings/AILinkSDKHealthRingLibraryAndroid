@@ -357,31 +357,31 @@ ringBleData.stopCheckup()
 ringBleData.syncUnixTime(timestamp: Long)
 
 //同步BLE系统时间，注意此处的timestamp必须和syncUnixTime的timestamp保持一致
-fun syncBleTime(timestamp: Long)
+ringBleData.syncBleTime(timestamp: Long)
 
 //设置睡眠/步数监测周期
-fun setSleepAndStepDuration(duration: Int = 5) //单位: 分钟
+ringBleData.setSleepAndStepDuration(duration: Int = 5) //单位: 分钟
 
 //查询睡眠/步数监测周期
-fun querySleepAndStepDuration()
+ringBleData.querySleepAndStepDuration()
 
 //查询睡眠监测状态
-fun querySleepCheck()
+ringBleData.querySleepCheck()
 
 //打开睡眠监测
-fun openSleepCheck()
+ringBleData.openSleepCheck()
 
 //关闭睡眠监测
-fun closeSleepCheck()
+ringBleData.closeSleepCheck()
 
 //查询步数监测状态
-fun queryStepCheck()
+ringBleData.queryStepCheck()
 
 //打开步数监测
-fun openStepCheck()
+ringBleData.openStepCheck()
 
 //关闭步数监测
-fun closeStepCheck()
+ringBleData.closeStepCheck()
 
 //获取睡眠/步数历史数据
 ringBleData.getSleepAndStepHistory()
