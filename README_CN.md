@@ -708,6 +708,7 @@ AILinkBleManager.getInstance().stopForeground();
 | 1.0.0 | 	2024/03/14 | 	suzy |	初始版本
 | 1.1.0 | 	2024/03/21 | 	suzy |	增加睡眠和步数指令处理
 | 1.1.1 | 	2024/04/01 | 	suzy |	修复固件0322版本不能体检的问题
+| 1.1.2 | 	2024/04/01 | 	suzy |	传感器OTA失败主动下发endOTA
 ---
 
 ## FAQ

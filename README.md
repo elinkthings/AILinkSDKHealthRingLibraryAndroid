@@ -697,6 +697,7 @@ enum class ElinkSleepState {
 | 1.0.0          | 2024/03/14  | suzy | Initial version
 | 1.1.0          | 2025/03/21  | suzy | Added sleep and step count command processing
 | 1.1.1          | 2025/04/01  | suzy | Fixed the issue that firmware 0322 version cannot perform physical inspection
+| 1.1.2          | 2025/04/01  | suzy | Sensor OTA fails and automatically sends endOTA
 ---
 
 ## FAQ
